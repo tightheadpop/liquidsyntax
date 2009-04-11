@@ -55,5 +55,53 @@ namespace LiquidSyntax {
         public static DateTime Previous(this DateTime start, DayOfWeek dayOfWeek) {
             return 8.Days().Before(start).Next(dayOfWeek);
         }
+
+        public static DateTime January(this int dayOfMonth, int year) {
+            return new DateTime(year, 1, dayOfMonth);
+        }
+
+        public static DateTime February(this int dayOfMonth, int year) {
+            return new DateTime(year, 2, dayOfMonth);
+        }
+
+        public static DateTime March(this int dayOfMonth, int year) {
+            return new DateTime(year, 3, dayOfMonth);
+        }
+
+        public static DateTime April(this int dayOfMonth, int year) {
+            return new DateTime(year, 4, dayOfMonth);
+        }
+
+        public static DateTime May(this int dayOfMonth, int year) {
+            return new DateTime(year, 5, dayOfMonth);
+        }
+
+        public static DateTime June(this int dayOfMonth, int year) {
+            return new DateTime(year, 6, dayOfMonth);
+        }
+
+        public static DateTime July(this int dayOfMonth, int year) {
+            return new DateTime(year, 7, dayOfMonth);
+        }
+
+        public static DateTime August(this int dayOfMonth, int year) {
+            return new DateTime(year, 8, dayOfMonth);
+        }
+
+        public static DateTime September(this int dayOfMonth, int year) {
+            return new DateTime(year, 9, dayOfMonth);
+        }
+
+        public static DateTime October(this int dayOfMonth, int year) {
+            return new DateTime(year, 10, dayOfMonth);
+        }
+
+        public static DateTime November(this int dayOfMonth, int year) {
+            return new DateTime(year, 11, dayOfMonth);
+        }
+
+        public static DateTime December(this int dayOfMonth, int year) {
+            return new DateTime(year, 12, dayOfMonth);
+        }
     }
 }

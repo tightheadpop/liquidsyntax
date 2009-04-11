@@ -1,17 +1,13 @@
 using LiquidSyntax.ForTesting;
 using NUnit.Framework;
+using NUnit.Framework.SyntaxHelpers;
 
 namespace LiquidSyntax.Tests.ForTesting {
     [TestFixture]
     public class BeTests {
         [Test]
         public void ShouldExtendIsStatically() {
-            ((object) null).Should(Be.Null);
-            try {
-                ((object) null).ShouldNot(Be.Null);
-                Assert.Fail("should have thrown exception");
-            }
-            catch (AssertionException) {}
+            Assert.IsTrue(typeof(Is).IsAssignableFrom(typeof(Be)));
         }
 
         [Test]
