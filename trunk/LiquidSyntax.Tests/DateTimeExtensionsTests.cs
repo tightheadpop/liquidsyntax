@@ -7,7 +7,7 @@ namespace LiquidSyntax.Tests {
     public class DateTimeExtensionsTests {
         [Test]
         public void AfterShouldGiveDateInFuture() {
-            2.Days().After(new DateTime(2005, 5, 9)).Should(Be.EqualTo(new DateTime(2005, 5, 11)));
+            2.Days().After(9.May(2005)).Should(Be.EqualTo(11.May(2005)));
         }
 
         [Test]
@@ -17,58 +17,50 @@ namespace LiquidSyntax.Tests {
 
         [Test]
         public void BeforeShouldGiveDateInFuture() {
-            2.Days().Before(new DateTime(2005, 5, 9)).Should(Be.EqualTo(new DateTime(2005, 5, 7)));
+            2.Days().Before(9.May(2005)).Should(Be.EqualTo(7.May(2005)));
         }
 
         [Test]
-        public void GetFirstDayOfWeek() {
-            const int sunday = 4;
-            var originalDate = new DateTime(2004, 7, sunday);
-            var firstDayOfWeek = originalDate.FirstDayOfWeek();
-            Assert.IsTrue(firstDayOfWeek.DayOfWeek == DayOfWeek.Sunday);
-            Assert.IsTrue(firstDayOfWeek.Year == originalDate.Year);
-            Assert.IsTrue(firstDayOfWeek.Month == originalDate.Month);
-            Assert.IsTrue(firstDayOfWeek.Day == originalDate.Day);
-            Assert.IsTrue(firstDayOfWeek.DayOfWeek == originalDate.DayOfWeek);
+        public void FirstDayOfWeekShouldBeEqualToGivenDateIfDateIsSunday() {
+            4.July(2004).FirstDayOfWeek().Should(Be.EqualTo(4.July(2004)));
+        }
 
-            const int monday = 5;
-            originalDate = new DateTime(2004, 7, monday);
-            firstDayOfWeek = originalDate.FirstDayOfWeek();
-            Assert.IsTrue(firstDayOfWeek.DayOfWeek == DayOfWeek.Sunday);
-            Assert.IsTrue(firstDayOfWeek.Year == originalDate.Year);
-            Assert.IsTrue(firstDayOfWeek.Month == originalDate.Month);
-            Assert.IsTrue(firstDayOfWeek.Day != originalDate.Day);
-            Assert.IsTrue(firstDayOfWeek.DayOfWeek != originalDate.DayOfWeek);
-
-            const int thursday = 8;
-            originalDate = new DateTime(2004, 7, thursday);
-            firstDayOfWeek = originalDate.FirstDayOfWeek();
-            Assert.IsTrue(firstDayOfWeek.DayOfWeek == DayOfWeek.Sunday);
-            Assert.IsTrue(firstDayOfWeek.Year == originalDate.Year);
-            Assert.IsTrue(firstDayOfWeek.Month == originalDate.Month);
-            Assert.IsTrue(firstDayOfWeek.Day != originalDate.Day);
-            Assert.IsTrue(firstDayOfWeek.DayOfWeek != originalDate.DayOfWeek);
+        [Test]
+        public void FirstDayOfWeekShouldReturnFirstSundayPriorToDate() {
+            1.January(2009).FirstDayOfWeek().Should(Be.EqualTo(28.December(2008)));
         }
 
         [Test]
         public void ShouldFindNextDayOfWeek() {
-            var expected = new DateTime(2005, 5, 9);
-
-            new DateTime(2005, 5, 2).Next(DayOfWeek.Monday).Should(Be.EqualTo(expected));
-            new DateTime(2005, 5, 8).Next(DayOfWeek.Monday).Should(Be.EqualTo(expected));
+            2.May(2005).Next(DayOfWeek.Monday).Should(Be.EqualTo(9.May(2005)));
+            8.May(2005).Next(DayOfWeek.Monday).Should(Be.EqualTo(9.May(2005)));
         }
 
         [Test]
         public void ShouldFindPreviousDayOfWeek() {
-            var expected = new DateTime(2005, 5, 9);
-
-            new DateTime(2005, 5, 12).Previous(DayOfWeek.Monday).Should(Be.EqualTo(expected));
-            new DateTime(2005, 5, 16).Previous(DayOfWeek.Monday).Should(Be.EqualTo(expected));
+            12.May(2005).Previous(DayOfWeek.Monday).Should(Be.EqualTo(9.May(2005)));
+            16.May(2005).Previous(DayOfWeek.Monday).Should(Be.EqualTo(9.May(2005)));
         }
 
         [Test]
         public void FromNowShouldGiveDateInFuture() {
             2.Seconds().FromNow().Should(Be.EqualTo(DateTime.Now.AddSeconds(2)).Within(50.Milliseconds()));
+        }
+
+        [Test]
+        public void ShouldBuildDatesUsingNaturalSyntax() {
+            2.January(2000).Should(Be.EqualTo(new DateTime(2000, 1, 2)));
+            3.February(2000).Should(Be.EqualTo(new DateTime(2000, 2, 3)));
+            9.March(2009).Should(Be.EqualTo(new DateTime(2009, 3, 9)));
+            9.April(2009).Should(Be.EqualTo(new DateTime(2009, 4, 9)));
+            9.May(2009).Should(Be.EqualTo(new DateTime(2009, 5, 9)));
+            9.June(2009).Should(Be.EqualTo(new DateTime(2009, 6, 9)));
+            9.July(2009).Should(Be.EqualTo(new DateTime(2009, 7, 9)));
+            9.August(2009).Should(Be.EqualTo(new DateTime(2009, 8, 9)));
+            9.September(2009).Should(Be.EqualTo(new DateTime(2009, 9, 9)));
+            9.October(2009).Should(Be.EqualTo(new DateTime(2009, 10, 9)));
+            9.November(2009).Should(Be.EqualTo(new DateTime(2009, 11, 9)));
+            9.December(2009).Should(Be.EqualTo(new DateTime(2009, 12, 9)));
         }
     }
 }
