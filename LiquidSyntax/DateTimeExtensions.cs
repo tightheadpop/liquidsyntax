@@ -49,7 +49,7 @@ namespace LiquidSyntax {
         public static DateTime Next(this DateTime start, DayOfWeek dayOfWeek) {
             if (dayOfWeek > start.DayOfWeek)
                 return start.AddDays(dayOfWeek - start.DayOfWeek);
-            return start.AddDays(7).FirstDayOfWeek().AddDays((int) dayOfWeek);
+            return 7.Days().After(start).FirstDayOfWeek().AddDays((int) dayOfWeek);
         }
 
         public static DateTime Previous(this DateTime start, DayOfWeek dayOfWeek) {

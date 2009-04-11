@@ -1,6 +1,6 @@
 using System;
-using NUnit.Framework;
 using LiquidSyntax.ForTesting;
+using NUnit.Framework;
 
 namespace LiquidSyntax.Tests {
     [TestFixture]
