@@ -2,16 +2,24 @@ using System;
 
 namespace LiquidSyntax {
     public static class DateTimeExtensions {
+        public static DateTime At(this DateTime dateTime, int time24Hour) {
+            var timeAsString = time24Hour.ToString();
+            var lengthOfHourSubstring = timeAsString.Length - 2;
+            var hour = Convert.ToInt32(timeAsString.Substring(0, lengthOfHourSubstring));
+            var minutes = Convert.ToInt32(timeAsString.Substring(lengthOfHourSubstring));
+            return dateTime.AddHours(hour).AddMinutes(minutes);
+        }
+
+        public static DateTime Before(this TimeSpan span, DateTime start) {
+            return start.Subtract(span);
+        }
+
         public static DateTime After(this TimeSpan span, DateTime start) {
             return start.Add(span);
         }
 
         public static DateTime Ago(this TimeSpan span) {
             return DateTime.Now.Subtract(span);
-        }
-
-        public static DateTime Before(this TimeSpan span, DateTime start) {
-            return start.Subtract(span);
         }
 
         public static DateTime FromNow(this TimeSpan span) {
