@@ -8,19 +8,19 @@ namespace LiquidSyntax.Tests {
     public class DisposeExtensionsTests {
         [Test]
         public void DisposeOfListDisposesAllItemsInList() {
-            var foo = new Foo();
-            var bar = new Foo();
+            var disposables = new List<FakeDisposable> {new FakeDisposable(), new FakeDisposable()};
 
-            new List<Foo> {foo, bar}.Dispose();
+            disposables.Dispose();
 
-            foo.Disposed.Should(Be.True);
-            bar.Disposed.Should(Be.True);
+            disposables.ForEach(d => d.Disposed.Should(Be.True));
         }
 
         [Test]
         public void DisposeQuietlyOfIDisposableSuppressesExceptions() {
             var exceptionThrowingDisposable = new ExceptionThrowingDisposable();
+
             exceptionThrowingDisposable.DisposeQuietly();
+
             exceptionThrowingDisposable.Disposed.Should(Be.True);
         }
 
@@ -71,14 +71,6 @@ namespace LiquidSyntax.Tests {
             public void Dispose() {
                 Disposed = true;
                 throw new ApplicationException("Simulate a fatal disposal.");
-            }
-        }
-
-        private class Foo : IDisposable {
-            public bool Disposed { get; private set; }
-
-            public void Dispose() {
-                Disposed = true;
             }
         }
     }

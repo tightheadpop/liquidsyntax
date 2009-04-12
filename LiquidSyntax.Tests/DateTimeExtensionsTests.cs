@@ -6,6 +6,12 @@ namespace LiquidSyntax.Tests {
     [TestFixture]
     public class DateTimeExtensionsTests {
         [Test]
+        public void AtShouldReturnTheSameDateWithTimeSet() {
+            4.March(2009).At(0745).Should(Be.EqualTo(new DateTime(2009, 3, 4, 7, 45, 0)));
+            4.March(2009).At(1301).Should(Be.EqualTo(new DateTime(2009, 3, 4, 13, 1, 0)));
+        }
+
+        [Test]
         public void AfterShouldGiveDateInFuture() {
             2.Days().After(9.May(2005)).Should(Be.EqualTo(11.May(2005)));
         }

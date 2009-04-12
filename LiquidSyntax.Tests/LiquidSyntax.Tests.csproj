@@ -45,6 +45,7 @@
     <Compile Include="DisposeExtensionsTests.cs" />
     <Compile Include="EventExtensionsTests.cs" />
     <Compile Include="ExceptionExtensionsTests.cs" />
+    <Compile Include="FakeDisposable.cs" />
     <Compile Include="ForTesting\BeTests.cs" />
     <Compile Include="ForTesting\HaveTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

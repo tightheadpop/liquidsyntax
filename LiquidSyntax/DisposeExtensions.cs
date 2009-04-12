@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LiquidSyntax {
     public static class DisposeExtensions {
@@ -9,17 +10,16 @@ namespace LiquidSyntax {
         public static void Dispose<TDisposable>(this IEnumerable<TDisposable> disposables) where TDisposable : IDisposable {
             if (disposables == null)
                 return;
-            foreach (IDisposable item in disposables) {
-                if (item != null)
-                    item.Dispose();
+            foreach (IDisposable disposable in disposables) {
+                if (disposable != null)
+                    disposable.Dispose();
             }
         }
 
         public static void DisposeQuietly<TDisposable>(this IEnumerable<TDisposable> disposables) where TDisposable : IDisposable {
             if (disposables == null)
                 return;
-            foreach (IDisposable item in disposables)
-                item.DisposeQuietly();
+            disposables.ToList().ForEach(d => d.DisposeQuietly());
         }
 
         public static void DisposeQuietly(this IDisposable disposable) {
