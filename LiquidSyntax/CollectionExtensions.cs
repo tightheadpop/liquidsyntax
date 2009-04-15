@@ -13,5 +13,9 @@ namespace LiquidSyntax {
         public static string Join<T>(this IEnumerable<T> items, string delimiter) {
             return string.Join(delimiter, items.ToList().ConvertAll(item => item.ToString()).ToArray());
         }
+
+        public static List<T> AsList<T>(this T obj) {
+            return new List<T>{obj};
+        }
     }
 }

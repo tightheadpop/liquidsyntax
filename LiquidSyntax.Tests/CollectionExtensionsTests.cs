@@ -14,5 +14,13 @@ namespace LiquidSyntax.Tests {
         public void ShouldJoinWithDelimiter() {
             new List<int> {3, 4, 2}.Join(", ").Should(Be.EqualTo("3, 4, 2"));
         }
+
+        [Test]
+        public void ShouldCreateListFromSingleObject() {
+            var instance = new FakeDisposable();
+            var list = instance.AsList();
+            list.Should(Be.EqualTo(new[]{instance}));
+            list.Should(Be.InstanceOfType(typeof(List<FakeDisposable>)));
+        }
     }
 }
