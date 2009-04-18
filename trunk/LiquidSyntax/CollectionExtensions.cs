@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +17,18 @@ namespace LiquidSyntax {
 
         public static List<T> AsList<T>(this T obj) {
             return new List<T>{obj};
+        }
+
+        public static bool IsEmpty(this IEnumerable enumerable) {
+#pragma warning disable 168
+            foreach (var item in enumerable)
+#pragma warning restore 168
+                return false;
+            return true;
+        }
+
+        public static bool IsNotEmpty(this IEnumerable enumerable) {
+            return !enumerable.IsEmpty();
         }
     }
 }
