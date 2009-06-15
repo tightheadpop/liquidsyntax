@@ -20,7 +20,7 @@ namespace LiquidSyntax.Tests {
             var instance = new FakeDisposable();
             var list = instance.AsList();
             list.Should(Be.EqualTo(new[]{instance}));
-            list.Should(Be.InstanceOfType(typeof(List<FakeDisposable>)));
+            list.Should(Be.InstanceOf(typeof(List<FakeDisposable>)));
         }
 
         [Test]

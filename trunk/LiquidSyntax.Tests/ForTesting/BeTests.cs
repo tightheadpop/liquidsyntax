@@ -1,6 +1,5 @@
 using LiquidSyntax.ForTesting;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
 
 namespace LiquidSyntax.Tests.ForTesting {
     [TestFixture]
@@ -22,9 +21,9 @@ namespace LiquidSyntax.Tests.ForTesting {
 
         [Test]
         public void ShouldProvideGenericFormOfInstanceOfTypeConstraint() {
-            7.Should(Be.InstanceOfType<int>());
+            7.Should(Be.InstanceOf<int>());
             try {
-                7.ShouldNot(Be.InstanceOfType<int>());
+                7.ShouldNot(Be.InstanceOf<int>());
                 Assert.Fail();
             }
             catch (AssertionException) {}
