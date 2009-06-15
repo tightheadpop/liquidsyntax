@@ -1,4 +1,4 @@
-using NUnit.Framework.SyntaxHelpers;
+using NUnit.Framework;
 
 namespace LiquidSyntax.ForTesting {
     public class Have : Has {}
