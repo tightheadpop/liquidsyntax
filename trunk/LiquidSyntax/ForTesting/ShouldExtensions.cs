@@ -18,5 +18,6 @@ namespace LiquidSyntax.ForTesting {
         public static void ShouldNot(this object o, Constraint constraint, string messageTemplate, params object[] messageArgs) {
             Assert.That(o, new NotConstraint(constraint), messageTemplate, messageArgs);
         }
+
     }
 }

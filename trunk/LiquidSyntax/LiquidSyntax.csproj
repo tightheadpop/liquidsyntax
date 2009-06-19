@@ -40,7 +40,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionExtensions.cs" />
@@ -49,6 +51,7 @@
     <Compile Include="EventExtensions.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="ForTesting\Be.cs" />
+    <Compile Include="ForTesting\Contain.cs" />
     <Compile Include="ForTesting\Have.cs" />
     <Compile Include="ForTesting\ShouldExtensions.cs" />
     <Compile Include="ForWeb\ControlExtensions.cs" />
