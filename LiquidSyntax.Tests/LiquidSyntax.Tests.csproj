@@ -50,6 +50,7 @@
     <Compile Include="FakeDisposable.cs" />
     <Compile Include="ForTesting\BeTests.cs" />
     <Compile Include="ForTesting\HaveTests.cs" />
+    <Compile Include="ForTesting\ContainTests.cs" />
     <Compile Include="ForWeb\ControlExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensionsTests.cs" />
