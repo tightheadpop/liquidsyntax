@@ -16,7 +16,7 @@ namespace LiquidSyntax {
         }
 
         public static List<T> AsList<T>(this T obj) {
-            return new List<T>{obj};
+            return new List<T> {obj};
         }
 
         public static bool IsEmpty(this IEnumerable enumerable) {
@@ -29,6 +29,12 @@ namespace LiquidSyntax {
 
         public static bool IsNotEmpty(this IEnumerable enumerable) {
             return !enumerable.IsEmpty();
+        }
+
+        public static List<int> To(this int start, int end) {
+            if (end < start)
+                return Enumerable.Range(end, start - end + 1).Reverse().ToList();
+            return Enumerable.Range(start, end - start + 1).ToList();
         }
     }
 }
