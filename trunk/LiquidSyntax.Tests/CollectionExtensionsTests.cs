@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using LiquidSyntax.ForTesting;
 using NUnit.Framework;
-using System.Linq;
 
 namespace LiquidSyntax.Tests {
     [TestFixture]
@@ -20,7 +19,7 @@ namespace LiquidSyntax.Tests {
         public void ShouldCreateListFromSingleObject() {
             var instance = new FakeDisposable();
             var list = instance.AsList();
-            list.Should(Be.EqualTo(new[]{instance}));
+            list.Should(Be.EqualTo(new[] {instance}));
             list.Should(Be.InstanceOf(typeof(List<FakeDisposable>)));
         }
 
@@ -34,17 +33,6 @@ namespace LiquidSyntax.Tests {
         public void ShouldIdentifyNonEmptyCollection() {
             new int[] {}.IsNotEmpty().Should(Be.False);
             new[] {1}.IsNotEmpty().Should(Be.True);
-        }
-
-        [Test]
-        public void CanCreateIncreasingRangeOfIntegers() {
-            1.To(5).Should(Be.EqualTo(new[] {1, 2, 3, 4, 5}));
-            1.To(1).Should(Be.EqualTo(new[] {1}));
-        }
-
-        [Test]
-        public void CanCreateDecreasingRangeOfIntegers() {
-            5.To(1).Should(Be.EqualTo(new[]{5,4,3,2,1}));
         }
     }
 }

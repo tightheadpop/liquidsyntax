@@ -55,6 +55,7 @@
     <Compile Include="ForTesting\Have.cs" />
     <Compile Include="ForTesting\ShouldExtensions.cs" />
     <Compile Include="ForWeb\ControlExtensions.cs" />
+    <Compile Include="NumberExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
