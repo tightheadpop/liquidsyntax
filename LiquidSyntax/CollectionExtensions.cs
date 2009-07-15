@@ -30,5 +30,18 @@ namespace LiquidSyntax {
         public static bool IsNotEmpty(this IEnumerable enumerable) {
             return !enumerable.IsEmpty();
         }
+
+        public static T Shift<T>(this ICollection<T> items) where T : class {
+            if (items.IsEmpty()) return null;
+            var t = items.First();
+            items.Remove(t);
+            return t;
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action) {
+            foreach (var item in items) {
+                action(item);
+            }
+        }
     }
 }
