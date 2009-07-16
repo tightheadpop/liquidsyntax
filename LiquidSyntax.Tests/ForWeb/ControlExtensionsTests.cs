@@ -73,6 +73,13 @@ namespace LiquidSyntax.Tests.ForWeb {
             result.Should(Be.EqualTo(new[] {rootPanel, firstChildPanel}));
         }
 
+        [Test]
+        public void GetHtmlFromControl() {
+            var thing = new Label {Text = "thing"};
+            var result = thing.GetHtml();
+            Assert.AreEqual("<span>thing</span>", result, "Html output does not match");
+        }
+
         private class PanelNamingContainer : Panel, INamingContainer {}
     }
 }

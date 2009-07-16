@@ -96,6 +96,8 @@ namespace LiquidSyntax.Tests {
         public void RemovePrefix() {
             Assert.AreEqual("test", "ratstest".WithoutPrefix("rats"));
             Assert.AreEqual("myratstest", "myratstest".WithoutPrefix("rats"), "should ignore missing prefix");
+            "testrat".WithoutPrefix(null).Should(Be.EqualTo("testrat"));
+            "testrat".WithoutPrefix(string.Empty).Should(Be.EqualTo("testrat"));
         }
 
         [Test]
@@ -108,6 +110,16 @@ namespace LiquidSyntax.Tests {
         public void RemoveSuffixByPattern() {
             Assert.AreEqual("test", "testrat".WithoutSuffixPattern("rAt"));
             Assert.AreEqual("testrat", "testrat".WithoutSuffixPattern("rrAt"));
+        }
+
+        [Test]
+        public void RemoveSuffixByStringMatch() {
+            "testrat".WithoutSuffix("rat").Should(Be.EqualTo("test"));
+            "testrats".WithoutSuffix("rat").Should(Be.EqualTo("testrats"));
+            "testrat".WithoutSuffix("Rat").Should(Be.EqualTo("testrat"));
+            "testrat".WithoutSuffix(string.Empty).Should(Be.EqualTo("testrat"));
+            "testrat".WithoutSuffix(null).Should(Be.EqualTo("testrat"));
+            ((string)null).WithoutSuffix(".").Should(Be.Null);
         }
 
         [Test]
