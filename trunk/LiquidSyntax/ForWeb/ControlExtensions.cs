@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web.UI;
 
 namespace LiquidSyntax.ForWeb {
@@ -46,6 +47,13 @@ namespace LiquidSyntax.ForWeb {
                     return result;
             }
             return null;
+        }
+
+        public static string GetHtml(this Control control) {
+            var stringWriter = new StringWriter();
+            var htmlTextWriter = new HtmlTextWriter(stringWriter);
+            control.RenderControl(htmlTextWriter);
+            return stringWriter.ToString();
         }
     }
 }

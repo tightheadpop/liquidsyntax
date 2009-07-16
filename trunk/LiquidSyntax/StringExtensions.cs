@@ -92,7 +92,11 @@ namespace LiquidSyntax {
         }
 
         public static string WithoutPrefix(this string s, string prefix) {
-            return s.IsNullOrEmpty() || !s.StartsWith(prefix) ? s : s.StringAfterFirst(prefix);
+            return s.IsNullOrEmpty() || prefix.IsNullOrEmpty() || !s.StartsWith(prefix) ? s : s.StringAfterFirst(prefix);
+        }
+
+        public static string WithoutSuffix(this string s, string suffix) {
+            return s.IsNullOrEmpty() || suffix.IsNullOrEmpty() || !s.EndsWith(suffix) ? s : s.StringBeforeLast(suffix);
         }
 
         public static string WithoutPrefixPattern(this string stringToTrim, string prefixPattern) {
