@@ -36,24 +36,6 @@ namespace LiquidSyntax.Tests {
         }
 
         [Test]
-        public void ShiftShouldRemoveAndReturnTheFirstElement() {
-            var list = new List<string> {"43","111","26"};
-            list.Shift().Should(Be.EqualTo("43"));
-            list.Should(Have.Count.EqualTo(2));
-
-            list.Shift().Should(Be.EqualTo("111"));
-            list.Should(Have.Count.EqualTo(1));
-
-            list.Shift().Should(Be.EqualTo("26"));
-            list.Should(Have.Count.EqualTo(0));
-        }
-
-        [Test]
-        public void ShiftShouldReturnNullWhenCollectionIsEmpty() {
-            new List<string>().Shift().Should(Be.Null);
-        }
-
-        [Test]
         public void ForEachShouldEnumerateItemsAndPerformAction() {
             var total = 0;
             new[] {1, 2, 3}.ForEach(i => total += i);
