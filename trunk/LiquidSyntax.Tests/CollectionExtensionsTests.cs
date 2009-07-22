@@ -41,5 +41,17 @@ namespace LiquidSyntax.Tests {
             new[] {1, 2, 3}.ForEach(i => total += i);
             total.Should(Be.EqualTo(6));
         }
+
+        [Test]
+        public void ShouldEnableAddOfMultipleItemsToCollection() {
+            var dictionary = new Dictionary<int, string> {{1, "foo"}};
+            var toAdd = new Dictionary<int, string> {{2, "bar"}, {3, "baz"}};
+            dictionary.AddRange(toAdd);
+
+            IEnumerable<KeyValuePair<int, string>> expected = new Dictionary<int, string> {
+                {1, "foo"}, {2, "bar"}, {3, "baz"}
+            };
+            dictionary.Should(Be.EquivalentTo(expected));
+        }
     }
 }
