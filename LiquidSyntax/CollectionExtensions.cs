@@ -36,5 +36,9 @@ namespace LiquidSyntax {
                 action(item);
             }
         }
+
+        public static void AddRange<T>(this ICollection<T> collection, ICollection<T> collectionToAdd) {
+            collectionToAdd.ForEach(collection.Add);
+        }
     }
 }

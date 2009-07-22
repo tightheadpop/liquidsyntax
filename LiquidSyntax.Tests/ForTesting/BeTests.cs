@@ -11,9 +11,9 @@ namespace LiquidSyntax.Tests.ForTesting {
 
         [Test]
         public void ShouldSupportEquivalentToSyntaxForParamArrays() {
-            new[] {7, 8, 9}.Should(Be.EquivalentTo(9, 7, 8));
+            new[] {7, 8, 9}.Should(Be.EquivalentTo(new[]{9, 7, 8}));
             try {
-                new[] {7, 8, 9}.ShouldNot(Be.EquivalentTo(9, 7, 8));
+                new[] {7, 8, 9}.ShouldNot(Be.EquivalentTo(new[]{9, 7, 8}));
                 Assert.Fail();
             }
             catch (AssertionException) {}
