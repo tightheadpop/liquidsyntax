@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using LiquidSyntax.ForTesting;
 using NUnit.Framework;
@@ -52,6 +53,24 @@ namespace LiquidSyntax.Tests {
                 {1, "foo"}, {2, "bar"}, {3, "baz"}
             };
             dictionary.Should(Be.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void ShouldSortEnumerableByComparisonMethod() {
+            var ints = new[] {3,2,6};
+            ints.SortedBy((a,b) => a-b).Should(Be.EqualTo(new[]{2,3,6}));
+        }
+
+        [Test]
+        public void ShouldSortEnumerableByComparer() {
+            var ints = new[] { 3, 2, 6 };
+            ints.SortedBy(new IntegerComparer()).Should(Be.EqualTo(new[] { 2, 3, 6 }));
+        }
+
+        private class IntegerComparer : Comparer<int> {
+            public override int Compare(int x, int y) {
+                return x - y;
+            }
         }
     }
 }
