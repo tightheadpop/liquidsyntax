@@ -40,5 +40,17 @@ namespace LiquidSyntax {
         public static void AddRange<T>(this ICollection<T> collection, ICollection<T> collectionToAdd) {
             collectionToAdd.ForEach(collection.Add);
         }
+
+        public static List<T> SortedBy<T>(this IEnumerable<T> collection, Comparison<T> comparison) {
+            var list = collection.ToList();
+            list.Sort(comparison);
+            return list;
+        }
+
+        public static List<T> SortedBy<T>(this IEnumerable<T> collection, Comparer<T> comparer) {
+            var list = collection.ToList();
+            list.Sort(comparer);
+            return list;
+        }
     }
 }
