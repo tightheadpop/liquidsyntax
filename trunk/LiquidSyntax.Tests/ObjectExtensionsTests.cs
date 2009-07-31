@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
-using NUnit.Framework;
+using System.ComponentModel;
 using LiquidSyntax.ForTesting;
+using NUnit.Framework;
 
 namespace LiquidSyntax.Tests {
     [TestFixture]
@@ -130,6 +131,34 @@ namespace LiquidSyntax.Tests {
             Assert.AreEqual(TestEnum.Dingsbums, testObject.TestEnum);
         }
 
+        [Test]
+        public void ShouldProvideAccessToDisplayNameAttribute() {
+            new TestObject().GetDisplayName().Should(Be.EqualTo("Test instance"));
+        }
+
+        [Test]
+        public void NullOrShouldReturnDefaultValueForPropertyOfNullInstance() {
+            TestObject t = null;
+            t.NullOr().StringArrayProperty.Should(Be.Null);
+            t.NullOr().TestEnum.Should(Be.EqualTo(TestEnum.Tchotchke));
+        }
+
+        [Test]
+        public void NullOrShouldReturnActualPropertyValueOfNonNullInstance() {
+            var t = new TestObject();
+            t.NullOr().StringArrayProperty.ShouldNot(Be.Null);
+        }
+
+        [Test]
+        public void NullOrShouldThrowExceptionForNonVirtualMemberInvocation() {
+            var t = new ComplexType();
+            try {
+                Console.Write(t.NullOr().StringProperty);
+                Assert.Fail();
+            }
+            catch (NotSupportedException) {}
+        }
+
         public class ComplexType {
             public string StringProperty {
                 get { return "expected"; }
@@ -141,27 +170,29 @@ namespace LiquidSyntax.Tests {
             Dingsbums = 1
         }
 
+        [DisplayName("Test instance")]
         public class TestObject : IDisposable {
             private IList _list = new ArrayList();
             private TestEnum _testEnum = TestEnum.Tchotchke;
             private bool _verifySet;
-            public bool disposed;
-            public bool poked;
 
-            public ComplexType ComplexProperty {
+            public virtual bool Disposed { get; private set; }
+            public virtual bool Poked { get; private set; }
+
+            public virtual ComplexType ComplexProperty {
                 get { return new ComplexType(); }
             }
 
-            public IList List {
+            public virtual IList List {
                 get { return _list; }
                 set { _list = value; }
             }
 
-            public string[] StringArrayProperty {
+            public virtual string[] StringArrayProperty {
                 get { return new[] {"first", "second"}; }
             }
 
-            public TestEnum TestEnum {
+            public virtual TestEnum TestEnum {
                 get { return _testEnum; }
                 set { _testEnum = value; }
             }
@@ -172,18 +203,18 @@ namespace LiquidSyntax.Tests {
             }
 
             public virtual void Dispose() {
-                disposed = true;
+                Disposed = true;
             }
 
-            public string Get() {
+            public virtual string Get() {
                 return "set";
             }
 
             public virtual void Poke() {
-                poked = true;
+                Poked = true;
             }
 
-            protected void Set() {
+            protected virtual void Set() {
                 _verifySet = true;
             }
         }
