@@ -132,8 +132,13 @@ namespace LiquidSyntax.Tests {
         }
 
         [Test]
-        public void ShouldProvideAccessToDisplayNameAttribute() {
+        public void ShouldProvideAccessToDisplayNameAttributeForInstances() {
             new TestObject().GetDisplayName().Should(Be.EqualTo("Test instance"));
+        }
+
+        [Test]
+        public void ShouldProvideAccessToDisplayNameAttributeForTypes() {
+            typeof(TestObject).GetDisplayName().Should(Be.EqualTo("Test instance"));
         }
 
         [Test]

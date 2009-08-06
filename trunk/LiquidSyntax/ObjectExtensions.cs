@@ -69,7 +69,11 @@ namespace LiquidSyntax {
         }
 
         public static string GetDisplayName(this object obj) {
-            var attribute = (DisplayNameAttribute) obj.GetType().GetCustomAttributes(typeof(DisplayNameAttribute), true).FirstOrDefault();
+            return obj.GetType().GetDisplayName();
+        }
+
+        public static string GetDisplayName(this Type type) {
+            var attribute = (DisplayNameAttribute) type.GetCustomAttributes(typeof(DisplayNameAttribute), true).FirstOrDefault();
             return attribute != null ? attribute.DisplayName : null;
         }
 
