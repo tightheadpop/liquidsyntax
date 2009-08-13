@@ -2,8 +2,6 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Interceptor;
-using Castle.DynamicProxy;
 
 namespace LiquidSyntax {
     /// <summary>
@@ -186,12 +184,6 @@ namespace LiquidSyntax {
             return method.Invoke(obj, parameters);
         }
 
-        public static T NullOr<T>(this T t) where T : class {
-            var options = new ProxyGenerationOptions(new NonVirtualMemberHatingHook());
-            var interceptor = new NullInstanceInterceptor(t);
-            return (T) new ProxyGenerator().CreateClassProxy(typeof(T), options, interceptor);
-        }
-
         public static bool PropertyExists(this object obj, string propertyName) {
             return obj.GetProperty(propertyName) != null;
         }
@@ -242,36 +234,6 @@ namespace LiquidSyntax {
             propertyInfo = info;
             value = property;
             return true;
-        }
-
-        private class NullInstanceInterceptor : IInterceptor {
-            private object Target { get; set; }
-
-            public NullInstanceInterceptor(object target) {
-                Target = target;
-            }
-
-            public void Intercept(IInvocation invocation) {
-                if (Target == null) {
-                    var expectedType = invocation.Method.ReturnType;
-                    invocation.ReturnValue = expectedType.IsClass ? null : Activator.CreateInstance(expectedType);
-                } else {
-                    invocation.Proceed();
-                }
-            }
-        }
-
-        private class NonVirtualMemberHatingHook : IProxyGenerationHook {
-            public bool ShouldInterceptMethod(Type type, MethodInfo memberInfo) {
-                return true;
-            }
-
-            public void NonVirtualMemberNotification(Type type, MemberInfo memberInfo) {
-                throw new NotSupportedException("Member {0} on type {1} must be virtual.".Substitute(memberInfo.Name, type.FullName));
-            }
-
-            public void MethodsInspected() {
-            }
         }
     }
 }

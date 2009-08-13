@@ -34,11 +34,8 @@
     <None Include="nunit.framework.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Castle.Core.dll" />
-    <Content Include="Castle.Core.xml" />
-    <Content Include="Castle.DynamicProxy2.dll" />
-    <Content Include="Castle.DynamicProxy2.xml" />
     <Content Include="nunit.framework.xml" />
+    <Content Include="NUnit.license.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
