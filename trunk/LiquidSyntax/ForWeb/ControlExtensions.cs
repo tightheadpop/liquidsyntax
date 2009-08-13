@@ -1,25 +1,35 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web.UI;
 
 namespace LiquidSyntax.ForWeb {
     public static class ControlExtensions {
         public static IEnumerable<T> FindAll<T>(this Control parent) {
-            return parent.FindAllWhere<T>(x => true);
+            return parent.FindAll<T>(x => true);
         }
 
-        public static IEnumerable<T> FindAllWhere<T>(this Control parent, Predicate<Control> predicate) {
+        public static IEnumerable<T> FindAll<T>(this Control parent, Predicate<T> where) {
             var controls = new List<T>();
-            if (typeof(T).IsInstanceOfType(parent) && predicate(parent))
-                controls.Add((T) (object) parent);
-            foreach (Control child in parent.Controls)
-                controls.AddRange(FindAllWhere<T>(child, predicate));
+            foreach (Control child in parent.Controls) {
+                controls.AddRange(FindAllRecursive(child, where));
+            }
+            return controls;
+        }
+
+        private static IEnumerable<T> FindAllRecursive<T>(Control control, Predicate<T> where) {
+            var controls = new List<T>();
+            if (typeof(T).IsInstanceOfType(control) && where((T) (object) control))
+                controls.Add((T) (object) control);
+            foreach (Control child in control.Controls)
+                controls.AddRange(FindAllRecursive(child, where));
             return controls;
         }
 
         /// <summary>
-        /// Finds all descendants of control of a specific type, but stops recursing when condition is met.
+        /// Finds all descendants of control of a specific type, but stops recursing each control branch when condition is met. Note
+        /// that recursion may continue on another branch of the control tree.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="parent"></param>
@@ -27,26 +37,31 @@ namespace LiquidSyntax.ForWeb {
         /// <returns></returns>
         public static IEnumerable<T> FindAllUntil<T>(this Control parent, Predicate<Control> stopCondition) {
             var result = new List<T>();
-            if (!stopCondition(parent)) {
-                if (typeof(T).IsInstanceOfType(parent)) {
-                    result.Add((T) (object) parent);
+            foreach (Control child in parent.Controls) {
+                result.AddRange(FindAllRecursiveUntil<T>(child, stopCondition));
+            }
+            return result;
+        }
+
+        private static IEnumerable<T> FindAllRecursiveUntil<T>(Control control, Predicate<Control> stopCondition) {
+            var result = new List<T>();
+            if (!stopCondition(control)) {
+                if (typeof(T).IsInstanceOfType(control)) {
+                    result.Add((T) (object) control);
                 }
-                foreach (Control child in parent.Controls) {
-                    result.AddRange(FindAllUntil<T>(child, stopCondition));
+                foreach (Control child in control.Controls) {
+                    result.AddRange(FindAllRecursiveUntil<T>(child, stopCondition));
                 }
             }
             return result;
         }
 
-        public static Control FindDescendantWithId(this Control parent, string childId) {
-            if (parent.ID == childId)
-                return parent;
-            foreach (Control child in parent.Controls) {
-                var result = FindDescendantWithId(child, childId);
-                if (result != null)
-                    return result;
-            }
-            return null;
+        public static T FindFirst<T>(this Control parent) {
+            return parent.FindAll<T>().FirstOrDefault();
+        }
+
+        public static T FindFirst<T>(this Control parent, Predicate<T> predicate) {
+            return parent.FindAll(predicate).FirstOrDefault();
         }
 
         public static string GetHtml(this Control control) {

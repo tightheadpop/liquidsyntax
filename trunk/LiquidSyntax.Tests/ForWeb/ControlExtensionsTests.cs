@@ -23,7 +23,7 @@ namespace LiquidSyntax.Tests.ForWeb {
             secondChildPanelNamingContainer = new PanelNamingContainer {ID = "second"};
             rootPanel.Controls.Add(secondChildPanelNamingContainer);
 
-            grandChildLabel = new Label {ID = "grandchild"};
+            grandChildLabel = new Label {ID = "parent"};
             secondChildPanelNamingContainer.Controls.Add(grandChildLabel);
 
             grandChildPanel = new Panel {ID = "grandpanel"};
@@ -42,6 +42,16 @@ namespace LiquidSyntax.Tests.ForWeb {
         }
 
         [Test]
+        public void FindFirstShouldFindFirstInstanceOfTypeInControlTree() {
+            rootPanel.FindFirst<Panel>().Should(Be.EqualTo(firstChildPanel));
+        }
+
+        [Test]
+        public void FindFirstShouldReturnNullLookingForNonExistentTypeInControlTree() {
+            rootPanel.FindFirst<Literal>().Should(Be.Null);
+        }
+
+        [Test]
         public void FindShouldHonorInterfaces() {
             var namingContainers = rootPanel.FindAll<INamingContainer>();
             namingContainers.Should(Be.EqualTo(new[] {secondChildPanelNamingContainer}));
@@ -50,27 +60,30 @@ namespace LiquidSyntax.Tests.ForWeb {
         [Test]
         public void ShouldFindAllDescendantsOfASpecificTypeInControlTree() {
             var panels = rootPanel.FindAll<Panel>();
-            panels.Should(Be.EquivalentTo(new[] {rootPanel, firstChildPanel, secondChildPanelNamingContainer, grandChildPanel}));
+            panels.Should(Be.EquivalentTo(new[] {firstChildPanel, secondChildPanelNamingContainer, grandChildPanel}));
         }
 
         [Test]
         public void ShouldIncludeControlsByPredicate() {
-            var panels = rootPanel.FindAllWhere<Panel>(c => !(c is INamingContainer));
-            panels.Should(Be.EquivalentTo(new[] {rootPanel, firstChildPanel, grandChildPanel}));
+            var panels = rootPanel.FindAll<Panel>(c => !(c is INamingContainer));
+            panels.Should(Be.EquivalentTo(new[] {firstChildPanel, grandChildPanel}));
         }
 
         [Test]
-        public void FindByIdAcrossNamingContainers() {
-            var result = rootPanel.FindDescendantWithId("grandchild");
-            Assert.AreEqual(grandChildLabel, result, "should find exactly one grand child based on id");
-            //TODO test identical IDs across naming containers
-            Assert.IsNull(rootPanel.FindDescendantWithId("not gonna find it"), "found non-existent control");
+        public void FindFirstWhereShouldIgnoreParentControl() {
+            var result = rootPanel.FindFirst<Control>(c => c.ID == "parent");
+            result.Should(Be.SameAs(grandChildLabel));
+        }
+
+        [Test]
+        public void FindFirstWhereShouldReturnNullIfNoDescendantExistsThatSatisfiesCondition() {
+            rootPanel.FindFirst<Control>(c => c.ID == "not gonna find it").Should(Be.Null);
         }
 
         [Test]
         public void FindByTypeStopsRecursing() {
             var result = rootPanel.FindAllUntil<Panel>(c => c is INamingContainer);
-            result.Should(Be.EqualTo(new[] {rootPanel, firstChildPanel}));
+            result.Should(Be.EqualTo(new[] {firstChildPanel}));
         }
 
         [Test]
