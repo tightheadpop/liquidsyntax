@@ -141,29 +141,6 @@ namespace LiquidSyntax.Tests {
             typeof(TestObject).GetDisplayName().Should(Be.EqualTo("Test instance"));
         }
 
-        [Test]
-        public void NullOrShouldReturnDefaultValueForPropertyOfNullInstance() {
-            TestObject t = null;
-            t.NullOr().StringArrayProperty.Should(Be.Null);
-            t.NullOr().TestEnum.Should(Be.EqualTo(TestEnum.Tchotchke));
-        }
-
-        [Test]
-        public void NullOrShouldReturnActualPropertyValueOfNonNullInstance() {
-            var t = new TestObject();
-            t.NullOr().StringArrayProperty.ShouldNot(Be.Null);
-        }
-
-        [Test]
-        public void NullOrShouldThrowExceptionForNonVirtualMemberInvocation() {
-            var t = new ComplexType();
-            try {
-                Console.Write(t.NullOr().StringProperty);
-                Assert.Fail();
-            }
-            catch (NotSupportedException) {}
-        }
-
         public class ComplexType {
             public string StringProperty {
                 get { return "expected"; }
