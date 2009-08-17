@@ -8,6 +8,10 @@ namespace LiquidSyntax {
             return string.Format(format, args);
         }
 
+        public static string Humanize(this string s) {
+            return Regex.Replace(s, "([a-z])([A-Z])", "$1 $2");
+        }
+
         public static string Reversed(this string original) {
             if (original == null) return null;
             return original.Reverse().Join(string.Empty);
