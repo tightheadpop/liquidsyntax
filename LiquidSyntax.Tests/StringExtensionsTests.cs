@@ -6,6 +6,12 @@ namespace LiquidSyntax.Tests {
     [TestFixture]
     public class StringExtensionsTests {
         [Test]
+        public void Humanize() {
+            "FooBar".Humanize().Should(Be.EqualTo("Foo Bar"));
+            "FooBarBaz".Humanize().Should(Be.EqualTo("Foo Bar Baz"));
+        }
+
+        [Test]
         public void ShouldSubstitutePlaceholders() {
             "{0}-{2}-1-{1}".Substitute(new StringBuilder("hi"), 2, "peanut").Should(Be.EqualTo("hi-peanut-1-2"));
         }
