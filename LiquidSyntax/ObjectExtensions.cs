@@ -18,7 +18,7 @@ namespace LiquidSyntax {
         public static T As<T>(this string value) where T : struct {
             if (typeof(T).IsEnum)
                 return (T) Enum.Parse(typeof(T), value);
-            return (T) Convert.ChangeType(value, typeof(T));
+            return value.IsNullOrEmpty() ? default(T) : (T) Convert.ChangeType(value, typeof(T));
         }
 
         /// <summary>
