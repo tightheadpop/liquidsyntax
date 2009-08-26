@@ -21,6 +21,12 @@ namespace LiquidSyntax.Tests {
         }
 
         [Test]
+        public void ConvertToIntHandlesNullAndEmptyString() {
+            Assert.AreEqual(0, "".As<int>());
+            Assert.AreEqual(0, ((string)null).As<int>());
+        }
+
+        [Test]
         public void FieldExists() {
             var testObject = new TestObject();
             Assert.IsTrue(testObject.FieldExists("_list"));
