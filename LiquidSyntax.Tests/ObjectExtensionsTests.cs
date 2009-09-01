@@ -1,12 +1,19 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Xml.Linq;
 using LiquidSyntax.ForTesting;
 using NUnit.Framework;
 
 namespace LiquidSyntax.Tests {
     [TestFixture]
     public class ObjectExtensionsTests {
+
+        [Test]
+        public void AsXDocument() {
+            Assert.AreEqual(typeof(XDocument), "<xml/>".AsXDocument().GetType());
+        }
+
         [Test]
         public void ConvertToEnum() {
             Assert.AreEqual(TestEnum.Tchotchke, "Tchotchke".As<TestEnum>());

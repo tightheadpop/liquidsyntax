@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Linq;
 
 namespace LiquidSyntax {
     /// <summary>
@@ -28,6 +29,14 @@ namespace LiquidSyntax {
         /// <param name="value">value to convert to T</param>
         public static T As<T>(this object value) where T : struct {
             return Convert.ToString(value).As<T>();
+        }
+
+        /// <summary>
+        /// Converts a string to an XDocument
+        /// </summary>
+        /// <param name="input">string to convert to XDocument</param>
+        public static XDocument AsXDocument(this string input) {
+            return XDocument.Parse(input);
         }
 
         /// <summary>
