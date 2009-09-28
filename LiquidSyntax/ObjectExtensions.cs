@@ -184,6 +184,11 @@ namespace LiquidSyntax {
             return implementingType.GetInterface(typeof(TInterface).FullName) != null;
         }
 
+        public static object InvokeConstructor(this Type type) {
+            var constructor = type.GetConstructor(Flags, null, new Type[] {}, null);
+            return constructor.Invoke(null);
+        }
+
         public static object InvokeMethod(this object obj, string methodName) {
             return obj.InvokeMethod(methodName, null);
         }

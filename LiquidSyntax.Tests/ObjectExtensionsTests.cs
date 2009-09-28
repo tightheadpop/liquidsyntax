@@ -8,7 +8,6 @@ using NUnit.Framework;
 namespace LiquidSyntax.Tests {
     [TestFixture]
     public class ObjectExtensionsTests {
-
         [Test]
         public void AsXDocument() {
             Assert.AreEqual(typeof(XDocument), "<xml/>".AsXDocument().GetType());
@@ -22,15 +21,15 @@ namespace LiquidSyntax.Tests {
         }
 
         [Test]
-        public void ConvertToValueType() {
-            Assert.AreEqual(true, "True".As<bool>());
-            Assert.AreEqual(1, "1".As<int>());
+        public void ConvertToIntHandlesNullAndEmptyString() {
+            Assert.AreEqual(0, "".As<int>());
+            Assert.AreEqual(0, ((string) null).As<int>());
         }
 
         [Test]
-        public void ConvertToIntHandlesNullAndEmptyString() {
-            Assert.AreEqual(0, "".As<int>());
-            Assert.AreEqual(0, ((string)null).As<int>());
+        public void ConvertToValueType() {
+            Assert.AreEqual(true, "True".As<bool>());
+            Assert.AreEqual(1, "1".As<int>());
         }
 
         [Test]
@@ -92,6 +91,16 @@ namespace LiquidSyntax.Tests {
             var result = testObject.InvokeMethod("Set");
             Assert.IsNull(result);
             Assert.IsTrue(testObject.VerifySet);
+        }
+
+        [Test]
+        public void InvokePublicConstructor() {
+            Assert.IsInstanceOf(typeof(TestObject), typeof(TestObject).InvokeConstructor());
+        }
+
+        [Test]
+        public void InvokeNonPublicConstructor() {
+            Assert.IsInstanceOf(typeof(TestObject_ProtectedConstructor), typeof(TestObject_ProtectedConstructor).InvokeConstructor());
         }
 
         [Test]
@@ -171,17 +180,18 @@ namespace LiquidSyntax.Tests {
             private TestEnum _testEnum = TestEnum.Tchotchke;
             private bool _verifySet;
 
-            public virtual bool Disposed { get; private set; }
-            public virtual bool Poked { get; private set; }
-
             public virtual ComplexType ComplexProperty {
                 get { return new ComplexType(); }
             }
+
+            public virtual bool Disposed { get; private set; }
 
             public virtual IList List {
                 get { return _list; }
                 set { _list = value; }
             }
+
+            public virtual bool Poked { get; private set; }
 
             public virtual string[] StringArrayProperty {
                 get { return new[] {"first", "second"}; }
@@ -212,6 +222,10 @@ namespace LiquidSyntax.Tests {
             protected virtual void Set() {
                 _verifySet = true;
             }
+        }
+
+        public class TestObject_ProtectedConstructor : TestObject {
+            protected TestObject_ProtectedConstructor() {}
         }
     }
 }
