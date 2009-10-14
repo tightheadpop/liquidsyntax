@@ -1,4 +1,5 @@
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using LiquidSyntax.ForTesting;
 using LiquidSyntax.ForWeb;
@@ -28,6 +29,18 @@ namespace LiquidSyntax.Tests.ForWeb {
 
             grandChildPanel = new Panel {ID = "grandpanel"};
             secondChildPanelNamingContainer.Controls.Add(grandChildPanel);
+        }
+
+        [Test]
+        public void FindAncestorShouldNavigateObjectGraphRecursivelyToFindTheFirstAncestorOfAGivenType() {
+            var anchor = new HtmlAnchor();
+            grandChildPanel.Controls.Add(anchor);
+            anchor.FindAncestor<PanelNamingContainer>().Should(Be.SameAs(secondChildPanelNamingContainer));
+        }
+
+        [Test]
+        public void FindAncestorShouldReturnNullIfNoSuchParentExists() {
+            grandChildPanel.FindAncestor<GridView>().Should(Be.Null);
         }
 
         [Test]

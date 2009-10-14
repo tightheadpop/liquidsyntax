@@ -56,6 +56,15 @@ namespace LiquidSyntax.ForWeb {
             return result;
         }
 
+        public static T FindAncestor<T>(this Control descendant) where T : Control {
+            var parent = descendant.Parent;
+            while (parent != null) {
+                if (parent is T) return (T) parent;
+                parent = parent.Parent;
+            }
+            return null;
+        }
+
         public static T FindFirst<T>(this Control parent) {
             return parent.FindAll<T>().FirstOrDefault();
         }

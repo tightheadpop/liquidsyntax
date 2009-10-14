@@ -9,6 +9,39 @@ namespace LiquidSyntax.Tests {
     [TestFixture]
     public class ObjectExtensionsTests {
         [Test]
+        public void OrReturnsInstanceWhenObjectReferenceIsNull() {
+            const object nil = null;
+            nil.Or("alternate value").Should(Be.EqualTo("alternate value"));
+        }
+
+        [Test]
+        public void OrReturnsOriginalInstanceWhenNotNull() {
+            var notNull = new object();
+            notNull.Or("alternate value").Should(Be.SameAs(notNull));
+        }
+
+        [Test]
+        public void OrDefersObjectCreationUsingLambdaWhenNotNull() {
+            var notNull = new object();
+            notNull.Or(() => new CannotCreate()).Should(Be.SameAs(notNull));
+        }
+
+        [Test]
+        public void OrCreateObjectUsingLambdaWhenNull() {
+            const object nil = null;
+            try {
+                nil.Or(() => new CannotCreate());
+                Assert.Fail();
+            }catch(ApplicationException) {}
+        }
+
+        private class CannotCreate {
+            public CannotCreate() {
+                throw new ApplicationException();
+            }
+        }
+
+        [Test]
         public void AsXDocument() {
             Assert.AreEqual(typeof(XDocument), "<xml/>".AsXDocument().GetType());
         }
