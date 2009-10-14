@@ -10,6 +10,11 @@ namespace LiquidSyntax {
             return dateTime.AddHours(hour).AddMinutes(minutes);
         }
 
+        public static DateTime At(this DateTime dateTime, string time) {
+            var day = dateTime.Date;
+            return day + TimeSpan.Parse(time);
+        }
+
         public static DateTime Before(this TimeSpan span, DateTime start) {
             return start.Subtract(span);
         }
