@@ -198,6 +198,18 @@ namespace LiquidSyntax {
             return method.Invoke(obj, parameters);
         }
 
+        public static T Or<T>(this T obj, T alternateValue) where T : class {
+            if (null == obj)
+                return alternateValue;
+            return obj;
+        }
+
+        public static T Or<T>(this T obj, Func<T> factoryMethod) where T : class {
+            if (null == obj)
+                return factoryMethod();
+            return obj;
+        }
+
         public static bool PropertyExists(this object obj, string propertyName) {
             return obj.GetProperty(propertyName) != null;
         }
