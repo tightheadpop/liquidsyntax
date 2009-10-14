@@ -12,6 +12,12 @@ namespace LiquidSyntax.Tests {
         }
 
         [Test]
+        public void AtShouldParse24HourStringTime() {
+            4.March(2009).At("13:01:16").Should(Be.EqualTo(new DateTime(2009, 3, 4, 13, 1, 16)));
+            4.March(2009).At("13:01").Should(Be.EqualTo(new DateTime(2009, 3, 4, 13, 1, 0)));
+        }
+
+        [Test]
         public void AfterShouldGiveDateInFuture() {
             2.Days().After(9.May(2005)).Should(Be.EqualTo(11.May(2005)));
         }
