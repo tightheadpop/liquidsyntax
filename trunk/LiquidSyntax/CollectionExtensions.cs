@@ -5,18 +5,22 @@ using System.Linq;
 
 namespace LiquidSyntax {
     public static class CollectionExtensions {
-        public static List<TComparable> Sorted<TComparable>(this IEnumerable<TComparable> comparables) where TComparable : IComparable<TComparable> {
-            var sorted = comparables.ToList();
-            sorted.Sort();
-            return sorted;
-        }
-
-        public static string Join<T>(this IEnumerable<T> items, string delimiter) {
-            return string.Join(delimiter, items.ToList().ConvertAll(item => item.ToString()).ToArray());
+        public static void AddRange<T>(this ICollection<T> collection, ICollection<T> collectionToAdd) {
+            collectionToAdd.ForEach(collection.Add);
         }
 
         public static List<T> AsList<T>(this T obj) {
             return new List<T> {obj};
+        }
+
+        public static HashSet<T> AsSet<T>(this T foo) {
+            return foo.AsList().ToSet();
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action) {
+            foreach (var item in items) {
+                action(item);
+            }
         }
 
         public static bool IsEmpty(this IEnumerable enumerable) {
@@ -31,14 +35,14 @@ namespace LiquidSyntax {
             return !enumerable.IsEmpty();
         }
 
-        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action) {
-            foreach (var item in items) {
-                action(item);
-            }
+        public static string Join<T>(this IEnumerable<T> items, string delimiter) {
+            return string.Join(delimiter, items.ToList().ConvertAll(item => item.ToString()).ToArray());
         }
 
-        public static void AddRange<T>(this ICollection<T> collection, ICollection<T> collectionToAdd) {
-            collectionToAdd.ForEach(collection.Add);
+        public static List<TComparable> Sorted<TComparable>(this IEnumerable<TComparable> comparables) where TComparable : IComparable<TComparable> {
+            var sorted = comparables.ToList();
+            sorted.Sort();
+            return sorted;
         }
 
         public static List<T> SortedBy<T>(this IEnumerable<T> collection, Comparison<T> comparison) {
@@ -51,6 +55,10 @@ namespace LiquidSyntax {
             var list = collection.ToList();
             list.Sort(comparer);
             return list;
+        }
+
+        public static HashSet<T> ToSet<T>(this ICollection<T> collection) {
+            return new HashSet<T>(collection);
         }
     }
 }
