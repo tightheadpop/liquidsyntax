@@ -57,6 +57,7 @@
     <Compile Include="ForTesting\HaveTests.cs" />
     <Compile Include="ForTesting\ContainTests.cs" />
     <Compile Include="ForWeb\ControlExtensionsTests.cs" />
+    <Compile Include="ForWeb\EventExtensionsTests.cs" />
     <Compile Include="NumberExtensionsTests.cs" />
     <Compile Include="ObjectExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
