@@ -60,6 +60,7 @@
     <Compile Include="ForTesting\Have.cs" />
     <Compile Include="ForTesting\ShouldExtensions.cs" />
     <Compile Include="ForWeb\ControlExtensions.cs" />
+    <Compile Include="ForWeb\EventExtensions.cs" />
     <Compile Include="NumberExtensions.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
