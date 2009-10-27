@@ -17,6 +17,14 @@ namespace LiquidSyntax {
             return foo.AsList().ToSet();
         }
 
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T, int> action) {
+            var index = 0;
+            foreach (var item in items) {
+                action(item, index);
+                index++;
+            }
+        }
+
         public static void ForEach<T>(this IEnumerable<T> items, Action<T> action) {
             foreach (var item in items) {
                 action(item);

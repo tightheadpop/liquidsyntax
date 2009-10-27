@@ -13,6 +13,12 @@ namespace LiquidSyntax.Tests {
         }
 
         [Test]
+        public void ForEachWithIndex() {
+            var dictionary = new Dictionary<int, string> {{0, "a"}, {1, "b"}, {2, "c"}};
+            new[] {"a", "b", "c"}.ForEach((item, index) => Assert.AreEqual(item, dictionary[index]));
+        }
+
+        [Test]
         public void ShouldCreateListFromSingleObject() {
             var instance = new FakeDisposable();
             var list = instance.AsList();
