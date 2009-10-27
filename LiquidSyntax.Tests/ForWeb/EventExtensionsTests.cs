@@ -12,6 +12,9 @@ namespace LiquidSyntax.Tests.ForWeb {
 
             Assert.AreSame(row, eventArgs.Row());
             Assert.AreEqual(5, eventArgs.RowIndex());
+
+            eventArgs = new GridViewCommandEventArgs(null, "commandSource", new CommandEventArgs("commandName", null));
+            Assert.AreEqual(null, eventArgs.RowIndex());
         }
     }
 }

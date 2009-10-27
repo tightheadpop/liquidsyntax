@@ -6,7 +6,8 @@ namespace LiquidSyntax.ForWeb {
             return (GridViewRow) eventArgs.GetPropertyValue("Row");
         }
 
-        public static int RowIndex(this GridViewCommandEventArgs eventArgs) {
+        public static int? RowIndex(this GridViewCommandEventArgs eventArgs) {
+            if (eventArgs.Row() == null) return null;
             return eventArgs.Row().RowIndex;
         }
     }
