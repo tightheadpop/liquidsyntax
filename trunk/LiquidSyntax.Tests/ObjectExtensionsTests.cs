@@ -196,6 +196,18 @@ namespace LiquidSyntax.Tests {
             typeof(TestObject).GetDisplayName().Should(Be.EqualTo("Test instance"));
         }
 
+        [Test]
+        public void ShouldFindItemInList() {
+            "foo".IsAny("goo", "foo").Should(Be.True);
+            "foo".IsAny("goo", "boo").Should(Be.False);
+        }
+
+        [Test]
+        public void ShouldNotFindItemInList() {
+            "foo".IsNotAny("goo", "foo").Should(Be.False);
+            "foo".IsNotAny("goo", "boo").Should(Be.True);
+        }
+
         public class ComplexType {
             public string StringProperty {
                 get { return "expected"; }

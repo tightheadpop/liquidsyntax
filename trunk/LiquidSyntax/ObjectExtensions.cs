@@ -198,6 +198,14 @@ namespace LiquidSyntax {
             return method.Invoke(obj, parameters);
         }
 
+        public static bool IsAny<T>(this T item, params T[] items) {
+            return items.Contains(item);
+        }
+
+        public static bool IsNotAny<T>(this T item, params T[] items) {
+            return !items.Contains(item);
+        }
+
         public static T Or<T>(this T obj, T alternateValue) where T : class {
             if (null == obj)
                 return alternateValue;
