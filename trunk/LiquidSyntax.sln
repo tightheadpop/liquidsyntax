@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiquidSyntax", "LiquidSyntax\LiquidSyntax.csproj", "{11C3C9A7-F094-4EC4-A8CF-34E979E2B855}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiquidSyntax.Tests", "LiquidSyntax.Tests\LiquidSyntax.Tests.csproj", "{38FCCD8C-6CE9-4771-BCF2-CEA04645EC3F}"
